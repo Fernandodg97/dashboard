@@ -18,7 +18,7 @@
 
 import { IonIcon } from '@ionic/vue';
 import { addIcons } from 'ionicons';
-import { navigateOutline, logoIonic, eyeOutline, peopleOutline, cashOutline, personOutline, personAddOutline, timeOutline } from 'ionicons/icons';
+import { navigateOutline, logoIonic, eyeOutline, peopleOutline, cashOutline, personOutline, personAddOutline, timeOutline, alertCircleOutline, serverOutline } from 'ionicons/icons';
 import vapexChart from 'vue3-apexcharts';
 import { ref, watchEffect, onUnmounted } from 'vue';
 
@@ -33,6 +33,8 @@ addIcons({
   'person-outline': personOutline,
   'person-add-outline': personAddOutline,
   'time-outline': timeOutline,
+  'alert-circle-outline':alertCircleOutline,
+  'server-outline': serverOutline
 });
 
 

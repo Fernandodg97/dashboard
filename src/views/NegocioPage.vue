@@ -141,12 +141,6 @@ const dataMixedChartSeries = ref([
   }
 ]);
 
-// Simular cambios en tiempo real (cada 2 segundos)
-setInterval(() => {
-  // Valor aleatorio entre 60 y 100 (por ejemplo)
-  dataGauge.value = Math.floor(60 + Math.random() * 40);
-}, 2000);
-
 // Data: ChartJsDoughnut
 
 // Computados para top 5 + “Otros”
@@ -188,7 +182,7 @@ const sparkData1 = ref({
 });
 
 const sparkData2 = ref({
-  title: "VENTAS €",
+  title: "VENTAS",
   value: "15000",
   bgColor: "gradient-green",
   textColor: "white",
@@ -246,6 +240,48 @@ const sparkData4 = ref({
   },
   chartSeries: [{ data: [40, 45, 47, 48, 50, 52, 55, 53, 54, 52] }],
 });
+
+
+// Tiempo real
+// Simular cambios en tiempo real (cada 2 segundos)
+setInterval(() => {
+  // Valor aleatorio entre 60 y 100 (por ejemplo)
+  dataGauge.value = Math.floor(60 + Math.random() * 40);
+}, 2000);
+
+// // SparkLines
+// function updateSparkData(sparkRef: any) {
+//   const newData = [...sparkRef.value.chartSeries[0].data];
+//   newData.shift(); // elimina el primer elemento
+//   newData.push(Math.floor(Math.random() * 5000) + 5000); // añade uno nuevo
+//   sparkRef.value.chartSeries[0].data = newData;
+// }
+
+// setInterval(() => {
+//   updateSparkData(sparkData1);
+//   updateSparkData(sparkData2);
+//   updateSparkData(sparkData3);
+//   updateSparkData(sparkData4);
+// }, 2000);
+
+// // ApexMixedChart
+// function updateMixedChartData() {
+//   dataMixedChartSeries.value.forEach((serie) => {
+//     const newData = [...serie.data];
+//     newData.shift();
+//     newData.push(Math.floor(Math.random() * 50) + 20);
+//     serie.data = newData;
+//   });
+// }
+// setInterval(updateMixedChartData, 3000);
+
+// // EchartsMap
+// setInterval(() => {
+//   dataDownloadsWorld.value.forEach(country => {
+//     const fluctuation = Math.floor(Math.random() * 1000) - 500; // +/-500
+//     country.value = Math.max(1000, country.value + fluctuation);
+//   });
+// }, 5000);
 
 
 </script>

@@ -18,7 +18,23 @@
 
       <h1 class="ion-padding">🚀 KPIs de Negocio</h1>
       <ion-accordion-group expand="inset" :multiple="true">
-        <ion-accordion v-for="item in smartGoals" :key="item.id" :value="item.id.toString()">
+        <ion-accordion v-for="item in negocio" :key="item.id" :value="item.id.toString()">
+          <ion-item slot="header">
+            <ion-label>{{ item.id }}. {{ item.title }}</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <p>{{ item.description }}</p>
+            <ion-list :inset="true">
+              <ion-item v-for="(element, index) in item.smart" :key="index">
+                <ion-label><b>{{ element.letter }}</b> → {{ element.content }}</ion-label>
+              </ion-item>
+            </ion-list>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+      <h1 class="ion-padding">📈 KPIs Técnicos</h1>
+      <ion-accordion-group expand="inset" :multiple="true">
+        <ion-accordion v-for="item in tecnicos" :key="item.id" :value="item.id.toString()">
           <ion-item slot="header">
             <ion-label>{{ item.id }}. {{ item.title }}</ion-label>
           </ion-item>
@@ -53,10 +69,10 @@ interface SmartGoal {
 }
 
 // KPIs SMART adaptados a tus gráficos y app de ventas
-const smartGoals = ref<SmartGoal[]>([
+const negocio = ref<SmartGoal[]>([
   {
     id: 1,
-    title: "Incrementar Ventas Mensuales (SparkLine / ApexMixedChart)",
+    title: "Incrementar Ventas Mensuales",
     description: "Incrementar las ventas mensuales en un 30% durante los próximos 3 meses mediante campañas de email marketing y promociones en fechas clave.",
     smart: [
       { letter: "S", content: "Incrementar las ventas mensuales" },
@@ -68,7 +84,7 @@ const smartGoals = ref<SmartGoal[]>([
   },
   {
     id: 2,
-    title: "Aumentar Retención de Usuarios (ApexMixedChart)",
+    title: "Aumentar Retención de Usuarios",
     description: "Aumentar la tasa de retención de usuarios del 40% al 60% en los próximos 6 meses mediante mejoras en la experiencia de usuario y soporte postventa.",
     smart: [
       { letter: "S", content: "Aumentar la tasa de retención de usuarios" },
@@ -80,7 +96,7 @@ const smartGoals = ref<SmartGoal[]>([
   },
   {
     id: 3,
-    title: "Alcanzar Objetivo de Ventas Trimestral (Gauge)",
+    title: "Alcanzar Objetivo de Ventas Trimestral",
     description: "Alcanzar el 100% del objetivo de ventas trimestral (50,000€) mediante una estrategia de upselling y campañas en redes sociales.",
     smart: [
       { letter: "S", content: "Alcanzar el objetivo de ventas trimestral" },
@@ -92,7 +108,7 @@ const smartGoals = ref<SmartGoal[]>([
   },
   {
     id: 4,
-    title: "Expandir Descargas Internacionales (EchartsMap)",
+    title: "Expandir Descargas Internacionales",
     description: "Aumentar las descargas internacionales en un 40% en los próximos 4 meses, con campañas localizadas para los países de habla inglesa y portuguesa.",
     smart: [
       { letter: "S", content: "Aumentar las descargas internacionales" },
@@ -104,7 +120,7 @@ const smartGoals = ref<SmartGoal[]>([
   },
   {
     id: 5,
-    title: "Concentrar Descargas en 5 Países Clave (Doughnut)",
+    title: "Concentrar Descargas en 5 Países Clave",
     description: "Lograr que el 70% de las descargas provengan de nuestros 5 mercados objetivo en los próximos 60 días a través de estrategias geolocalizadas de publicidad.",
     smart: [
       { letter: "S", content: "Lograr que el 70% de las descargas provengan de 5 países clave" },
@@ -115,4 +131,104 @@ const smartGoals = ref<SmartGoal[]>([
     ]
   }
 ]);
+const tecnicos = ref<SmartGoal[]>([
+  {
+  id: 1,
+  title: "Reducir Procesamientos Pendientes",
+  description: "Reducir la cola de procesamiento en un 25% en las próximas 4 semanas optimizando el rendimiento del backend.",
+  smart: [
+    { letter: "S", content: "Reducir la cola de procesamiento pendiente" },
+    { letter: "M", content: "25% menos en 4 semanas" },
+    { letter: "A", content: "optimizando el rendimiento del backend" },
+    { letter: "R", content: "para mejorar la eficiencia de procesamiento" },
+    { letter: "T", content: "en 4 semanas" }
+  ]
+},
+{
+  id: 2,
+  title: "Minimizar Servicios Caídos",
+  description: "Disminuir los servicios caídos a un promedio menor a 2 por día durante el próximo mes implementando alta disponibilidad.",
+  smart: [
+    { letter: "S", content: "Reducir la cantidad de servicios caídos diarios" },
+    { letter: "M", content: "menos de 2 por día en promedio" },
+    { letter: "A", content: "implementando alta disponibilidad" },
+    { letter: "R", content: "para garantizar continuidad operativa" },
+    { letter: "T", content: "en el próximo mes" }
+  ]
+},
+{
+  id: 3,
+  title: "Controlar Errores Críticos",
+  description: "Reducir los errores críticos en producción en un 50% en los próximos 2 meses mediante monitoreo proactivo.",
+  smart: [
+    { letter: "S", content: "Reducir los errores críticos" },
+    { letter: "M", content: "50% en 2 meses" },
+    { letter: "A", content: "con monitoreo y alertas proactivas" },
+    { letter: "R", content: "para mejorar la estabilidad del sistema" },
+    { letter: "T", content: "durante los próximos 2 meses" }
+  ]
+},
+{
+  id: 4,
+  title: "Mejorar Velocidad de Red",
+  description: "Mantener la velocidad promedio de red por encima de 700 Mbps durante los próximos 30 días utilizando balanceo de carga.",
+  smart: [
+    { letter: "S", content: "Mantener la velocidad de red alta" },
+    { letter: "M", content: "por encima de 700 Mbps" },
+    { letter: "A", content: "utilizando balanceo de carga" },
+    { letter: "R", content: "para evitar cuellos de botella en transmisión de datos" },
+    { letter: "T", content: "durante los próximos 30 días" }
+  ]
+},
+{
+  id: 5,
+  title: "Optimizar Usuarios Conectados",
+  description: "Estabilizar la cantidad de usuarios concurrentes bajo un límite de 80 para evitar saturaciones del sistema en tiempo real.",
+  smart: [
+    { letter: "S", content: "Evitar saturación de usuarios concurrentes" },
+    { letter: "M", content: "máximo de 80 usuarios simultáneos" },
+    { letter: "A", content: "optimizando el sistema en tiempo real" },
+    { letter: "R", content: "para mantener la fluidez del servicio" },
+    { letter: "T", content: "de forma continua" }
+  ]
+},
+{
+  id: 6,
+  title: "Reducir Uso de CPU",
+  description: "Mantener el uso de CPU por debajo del 70% promedio durante 1 mes mediante revisión de procesos intensivos.",
+  smart: [
+    { letter: "S", content: "Reducir el uso promedio de CPU" },
+    { letter: "M", content: "por debajo del 70%" },
+    { letter: "A", content: "optimizando procesos intensivos" },
+    { letter: "R", content: "para mejorar el rendimiento del servidor" },
+    { letter: "T", content: "durante 1 mes" }
+  ]
+},
+{
+  id: 7,
+  title: "Mantener Uso de RAM Estable",
+  description: "Mantener el uso de memoria RAM entre 50% y 70% de manera estable los próximos 30 días optimizando caché y garbage collection.",
+  smart: [
+    { letter: "S", content: "Mantener uso de RAM entre 50%-70%" },
+    { letter: "M", content: "de forma constante por 30 días" },
+    { letter: "A", content: "con optimización de caché y GC" },
+    { letter: "R", content: "para evitar ralentizaciones del sistema" },
+    { letter: "T", content: "en el siguiente mes" }
+  ]
+},
+{
+  id: 8,
+  title: "Monitorear Tráfico de Red en Tiempo Real",
+  description: "Visualizar y mantener el tráfico de descargas/subidas dentro de parámetros saludables, evitando saturaciones críticas.",
+  smart: [
+    { letter: "S", content: "Monitorear tráfico de red constantemente" },
+    { letter: "M", content: "dentro de límites definidos (DL < 1000 / UL < 300)" },
+    { letter: "A", content: "con dashboards de red en tiempo real" },
+    { letter: "R", content: "para prevenir pérdidas de conectividad" },
+    { letter: "T", content: "de forma continua" }
+  ]
+}
+]);
+
+
 </script>
