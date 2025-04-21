@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<{
       palette: 'palette1',
     },
     title: {
-      text: 'Mixed Chart',
+      text: 'Métricas de negocio: Ventas, Tráfico y Retención',
       align: 'left',
       style: {
         fontSize: '16px',
@@ -52,15 +52,16 @@ const props = withDefaults(defineProps<{
         stops: [0, 100, 100, 100],
       }
     },
-    labels: [
-      '01/01/2003', '02/01/2003', '03/01/2003',
-      '04/01/2003', '05/01/2003', '06/01/2003',
-      '07/01/2003', '08/01/2003', '09/01/2003',
-      '10/01/2003', '11/01/2003'
-    ],
+    // labels: [
+    //   '01/01/2003', '02/01/2003', '03/01/2003',
+    //   '04/01/2003', '05/01/2003', '06/01/2003',
+    //   '07/01/2003', '08/01/2003', '09/01/2003',
+    //   '10/01/2003', '11/01/2003'
+    // ],
     markers: { size: 0 },
     xaxis: {
-      type: 'datetime',
+      categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+      //type: 'datetime',
       labels: { style: { colors: '#8C8C8C' } }
     },
     yaxis: {

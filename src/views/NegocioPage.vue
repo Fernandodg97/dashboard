@@ -50,7 +50,7 @@
             <ApexMixedChart :series="dataMixedChartSeries" />
           </ion-col>
           <ion-col size="12" size-lg="3">
-            <EchartsGauge :value=dataGauge title="DESCARGAS" />
+            <EchartsGauge :value=dataGauge title="OBJETIVO VENTAS" />
           </ion-col>
         </ion-row>
 
@@ -64,7 +64,8 @@
           </ion-col>
           <ion-col size="12" size-lg="6">
             <div class="box">
-              <DangerousGoose />
+              <!-- <DangerousGoose :percent="percent" label="Países > 5K" /> -->
+                <ChartJsDoughnut :labels="doughnutLabels" :values="doughnutValues" title="Descargas Top 5 Países" description="Reparto de descargas entre los 5 primeros países y el resto"/>
             </div>
           </ion-col>
         </ion-row>
@@ -76,12 +77,12 @@
 
 <script setup lang="ts">
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol } from '@ionic/vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import SparkLine from '@/components/SparkLine.vue';
 import ApexMixedChart from '@/components/ApexMixedChart.vue';
 import EchartsGauge from '@/components/EchartsGauge.vue';
 import EchartsMap from '@/components/EchartsMap.vue';
-import DangerousGoose from '@/components/dangerous-goose-30.vue'
+import ChartJsDoughnut from '@/components/ChartJsDoughnut.vue';
 
 // 🌎 Data: EchartsMao - GEOMAPS
 const dataDownloadsWorld = ref([
@@ -118,33 +119,57 @@ const dataDownloadsWorld = ref([
   { name: "Uruguay", value: 2800 },
 ]);
 
-
 // 🧭 Data: EchartsGauge
-const dataGauge = ref(70);
+const dataGauge = ref(90);
 
 // 📊 Data: ApexMixedChart
 const dataMixedChartSeries = ref([
   {
-    name: 'Column',
+    name: 'Ventas',
     type: 'column',
-    data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
+    data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 25,]
   },
   {
-    name: 'Area',
+    name: 'Tráfico',
     type: 'area',
-    data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
+    data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43, 50,]
   },
   {
-    name: 'line',
+    name: 'Retención',
     type: 'line',
-    data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]
+    data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 42,]
   }
 ]);
 
+// Simular cambios en tiempo real (cada 2 segundos)
+setInterval(() => {
+  // Valor aleatorio entre 60 y 100 (por ejemplo)
+  dataGauge.value = Math.floor(60 + Math.random() * 40);
+}, 2000);
+
+// Data: ChartJsDoughnut
+
+// Computados para top 5 + “Otros”
+const sorted = computed(() =>
+  [...dataDownloadsWorld.value].sort((a, b) => b.value - a.value)
+);
+const top5 = computed(() => sorted.value.slice(0, 5));
+const others = computed(() =>
+  sorted.value.slice(5).reduce((sum, c) => sum + c.value, 0)
+);
+
+const doughnutLabels = computed(() =>
+  top5.value.map(c => c.name).concat('Otros')
+);
+const doughnutValues = computed(() =>
+  top5.value.map(c => c.value).concat(others.value)
+);
+
+// Data: spark-line
 
 const sparkData1 = ref({
   title: "USUARIOS ACTIVOS",
-  value: "92K",
+  value: "92000",
   bgColor: "gradient-blue",
   textColor: "white",
   iconName: "person-outline",
@@ -171,7 +196,7 @@ const sparkData2 = ref({
   chartOptions: {
     chart: {
       id: 'ventas',
-      type: 'area',
+      type: 'bar',
       sparkline: { enabled: true },
       dropShadow: { enabled: true, top: 1, left: 1, blur: 2, opacity: 0.5 }
     },
@@ -191,7 +216,7 @@ const sparkData3 = ref({
   chartOptions: {
     chart: {
       id: 'usuarios-nuevos',
-      type: 'area',
+      type: 'line',
       sparkline: { enabled: true },
       dropShadow: { enabled: true, top: 1, left: 1, blur: 2, opacity: 0.5 }
     },
@@ -211,7 +236,7 @@ const sparkData4 = ref({
   chartOptions: {
     chart: {
       id: 'tiempo-usuario',
-      type: 'area',
+      type: 'scatter',
       sparkline: { enabled: true },
       dropShadow: { enabled: true, top: 1, left: 1, blur: 2, opacity: 0.5 }
     },
