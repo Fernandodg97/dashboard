@@ -49,7 +49,7 @@
             <!-- <div class="box">
               <ApexLineRT :series="series" title="Usuarios online" :kpi-target="70" color="#3b82f6" />
              -->
-             <div class="box">
+            <div class="box">
               <ChartJsDoughnut v-bind="doughnutSystemUsage" />
             </div>
           </ion-col>
@@ -251,17 +251,17 @@ const series = ref([{ name: 'Usuarios', data: data.value }]);
 /***** 🧠 LÓGICA REALTIME *****/
 function addDataRealTime() {
 
-const newX = lastDate + UPDATE_INTERVAL;
-const newY = Math.floor(Math.random() * 90) + 10;
-data.value.push({ x: newX, y: newY });
+  const newX = lastDate + UPDATE_INTERVAL;
+  const newY = Math.floor(Math.random() * 90) + 10;
+  data.value.push({ x: newX, y: newY });
 
-// ApexLineRT - Cuidar uso de memoria
-if (data.value.length > MAX_DATA_POINTS) {
-  data.value = data.value.slice(-2);
-  series.value = [{ name: 'Usuarios', data: data.value }];
-}
+  // ApexLineRT - Cuidar uso de memoria
+  if (data.value.length > MAX_DATA_POINTS) {
+    data.value = data.value.slice(-2);
+    series.value = [{ name: 'Usuarios', data: data.value }];
+  }
 
-lastDate = newX;
+  lastDate = newX;
 }
 
 // Data: Echarts - Gauge Simple: Valor inicial para la Red
