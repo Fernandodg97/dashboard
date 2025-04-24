@@ -1,5 +1,11 @@
 <template>
-    <div class="box-mixedChart">
+  <div class="kpi-container" v-if="props.kpis.length">
+    <div v-for="(kpi, index) in props.kpis" :key="index" class="kpi">
+      <span class="kpi-label">{{ kpi.label + ":"}}</span>
+      <span class="kpi-value">{{ kpi.value }}</span>
+    </div>
+  </div>
+  <div class="box-mixedChart">
     <VueApexCharts type="line" height="100%" :options="options" :series="series" />
   </div>
 </template>
@@ -12,7 +18,9 @@ import { withDefaults, defineProps } from 'vue';
 const props = withDefaults(defineProps<{
   series: ApexAxisChartSeries;
   options?: ApexCharts.ApexOptions;
+  kpis?: { label: string; value: string | number }[];
 }>(), {
+  kpis: () => [],
   options: () => ({
     chart: {
       type: 'line',
@@ -93,12 +101,37 @@ const props = withDefaults(defineProps<{
 
 
 <style scoped>
-  .box-mixedChart{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 290px;
-    width: 100%;
-    padding: 16px;
-  }
+.box-mixedChart{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 290px;
+  width: 100%;
+  padding: 16px;
+}
+
+.kpi-container {
+  display: flex;
+  justify-content: space-around;
+  color: #fff;
+  gap: 20px;
+  margin-top: 1.5rem;
+}
+
+.kpi {
+  text-align: center;
+}
+
+.kpi-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  
+}
+
+.kpi-label {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-right: 10px;
+}
+
 </style>

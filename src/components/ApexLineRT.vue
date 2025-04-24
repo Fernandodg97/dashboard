@@ -29,7 +29,7 @@
   const chartOptions = computed(() => ({
     chart: {
       id: 'realtime',
-      type: 'line',
+      type: 'bar',
       animations: {
         enabled: true,
         easing: 'linear',

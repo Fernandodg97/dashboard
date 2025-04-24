@@ -1,5 +1,10 @@
 <template>
     <div class="streaming-chart">
+        <div class="kpi-box" v-if="currentKPI !== null">  
+            <span class="kpi-label">Actual: </span>
+            <span class="kpi-value">{{ currentKPI }}%</span>
+            <span class="kpi-target" v-if="props.kpiTarget">/ Objetivo: {{ props.kpiTarget }}%</span>
+        </div>
         <canvas ref="canvasRef"></canvas>
     </div>
 </template>
@@ -11,7 +16,6 @@ import { Chart, LineController, LineElement, PointElement, LinearScale, TimeScal
 import streamingPlugin from 'chartjs-plugin-streaming';
 import 'chartjs-adapter-date-fns';
 
-
 // Definir props
 const props = withDefaults(defineProps<{
     chartType?: 'line' | 'area';
@@ -19,6 +23,7 @@ const props = withDefaults(defineProps<{
     color?: string;
     min?: number;
     max?: number;
+    kpiTarget?: number;
 }>(), {
     chartType: 'line',
     title: 'Carga del servidor',
@@ -31,6 +36,7 @@ const props = withDefaults(defineProps<{
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 let chartInstance: Chart | null = null;
 
+const currentKPI = ref<number | null>(null);
 
 onMounted(() => {
     if (!canvasRef.value) return;
@@ -84,10 +90,12 @@ onMounted(() => {
                         refresh: 1000,        // Nuevo punto cada 1s
                         delay: 1000,          // Retraso para sincronización visual
                         onRefresh(chart) {
+                            const newY = Math.floor(Math.random() * (Math.min(props.max, 100) - props.min) + props.min);
                             chart.data.datasets[0].data.push({
                                 x: Date.now(),
                                 y: Math.floor(Math.random() * (Math.min(props.max, 100) - props.min) + props.min),
                             });
+                            currentKPI.value = newY;
                         }
                     },
                     grid: {
@@ -186,7 +194,28 @@ onBeforeUnmount(() => {
 <style scoped>
 .streaming-chart {
     width: 100%;
-    height: 100%;
+    height: 90%;
     padding: 8px 15px;
+}
+.kpi-box {
+  text-align: center;
+  /* margin-bottom: 0.5rem; */
+  font-size: 0.9rem;
+  color: #f0f0f0;
+}
+
+.kpi-box span {
+  display: inline;
+}
+
+.kpi-value {
+  /* font-size: 1.1rem; */
+  font-weight: bold;
+  margin: 0 4px;
+}
+
+.kpi-label, .kpi-target {
+  font-size: 0.85rem;
+  color: #8C8C8C;
 }
 </style>

@@ -11,6 +11,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { Chart, registerables } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+Chart.register(ChartDataLabels);
 Chart.register(...registerables);
 
 // Props tipados
@@ -42,7 +44,7 @@ function initChart() {
           '#e78f30aa',
           '#d65db1aa',
           '#EE9AE5aa',
-          '#55555544'
+          '#d65656'
         ],
         borderWidth: 2,
         borderColor: '#1E1E1E'
@@ -62,7 +64,24 @@ function initChart() {
         },
         tooltip: {
           callbacks: {
-            label: ctx => `${ctx.label}: ${ctx.parsed}`
+            label: ctx => {
+              const total = ctx.dataset.data.reduce((sum, val) => sum + val, 0);
+              const value = ctx.parsed;
+              const percentage = ((value / total) * 100).toFixed(1);
+              return `${ctx.label}: ${value} (${percentage}%)`;
+            }
+          }
+        },
+        datalabels: {
+          color: '#fff',
+          font: {
+            weight: 'bold'
+          },
+          formatter: (value, context) => {
+            // Sum, val y total los detecta como posibles null
+            const total = context.chart.data.datasets[0].data.reduce((sum, val) => sum + val, 0);
+            const percentage = ((value / total) * 100).toFixed(1);
+            return `${percentage}%`;
           }
         }
       }

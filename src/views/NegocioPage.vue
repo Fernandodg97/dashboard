@@ -47,10 +47,14 @@
         <!-- 🔵 Fila 2: 2 Columnas -->
         <ion-row class="ion-row-2">
           <ion-col size="12" size-lg="9">
-            <ApexMixedChart :series="dataMixedChartSeries" />
+            <div class="box">
+              <ApexMixedChart :series="dataMixedChartSeries" :kpis="[{ label: 'Total ventas', value: '1,230' },{ label: 'Tráfico medio', value: '842' },{ label: 'Retención', value: '74%' }]"/>
+            </div>
           </ion-col>
           <ion-col size="12" size-lg="3">
+            <div class="box">
             <EchartsGauge :value=dataGauge title="OBJETIVO VENTAS" />
+            </div>
           </ion-col>
         </ion-row>
 
@@ -64,7 +68,6 @@
           </ion-col>
           <ion-col size="12" size-lg="6">
             <div class="box">
-              <!-- <DangerousGoose :percent="percent" label="Países > 5K" /> -->
                 <ChartJsDoughnut :labels="doughnutLabels" :values="doughnutValues" title="Descargas Top 5 Países" description="Reparto de descargas entre los 5 primeros países y el resto"/>
             </div>
           </ion-col>

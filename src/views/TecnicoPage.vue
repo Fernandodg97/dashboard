@@ -46,28 +46,22 @@
             </div>
           </ion-col>
           <ion-col size="12" size-md="9" pull-md="3">
-            <!-- <div class="box">
-              <ApexLineRT :series="series" title="Usuarios online" :kpi-target="70" color="#3b82f6" />
-             -->
             <div class="box">
-              <ChartJsDoughnut v-bind="doughnutSystemUsage" />
+              <ApexLineRT :series="series" title="Usuarios online" :kpi-target="80" color="#3b82f6" />
             </div>
           </ion-col>
         </ion-row>
 
         <!-- 🟠 Fila 3: 3 Columnas -->
-        <!-- <ion-row class="ion-row-3">
+        <ion-row class="ion-row-3">
           <ion-col size="12" size-lg="4.5">
             <div class="box">
-              <ChartJSLineAreaRT chartType="line" title="Carga CPU" color="#10b981" />
-            </div>
-            <div class="box">
-              <ApexLineRT :series="series" title="Usuarios online" :kpi-target="70" color="#3b82f6" />
+              <ChartJSLineAreaRT chartType="line" title="Carga CPU" :kpi-target="70" color="#10b981" />
             </div>
           </ion-col>
           <ion-col size="12" size-lg="4.5">
             <div class="box">
-              <ChartJSLineAreaRT chartType="area" title="Memoria RAM" color="#3b82f6" :min=50 :max=70 />
+              <ChartJSLineAreaRT chartType="area" title="Memoria RAM" :kpi-target="50" color="#3b82f6" :min=50 :max=70 />
             </div>
           </ion-col>
           <ion-col size="12" size-lg="3">
@@ -75,22 +69,7 @@
               <EchartsGaugeMultiple :segments="ringSegments" />
             </div>
           </ion-col>
-        </ion-row> -->
-
-        <!-- ########## 🟠 Fila 3: 3 Columnas FER ########## -->
-        <ion-row class="ion-row-3">
-          <ion-col size="12" size-md="3" push-md="9">
-            <div class="box">
-              <EchartsGaugeMultiple :segments="ringSegments" />
-            </div>
-          </ion-col>
-          <ion-col size="12" size-md="9" pull-md="3">
-            <div class="box">
-              <ApexLineRT :series="series" title="Usuarios online" :kpi-target="70" color="#3b82f6" />
-            </div>
-          </ion-col>
         </ion-row>
-
       </ion-grid>
     </ion-content>
   </ion-page>
@@ -101,7 +80,7 @@
 <script setup lang="ts">
 /***** 🧰 DEPENDENCIAS ******/
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol } from '@ionic/vue';
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, } from 'vue';
 
 // Sparkline
 import SparkLine from '@/components/SparkLine.vue';
@@ -115,7 +94,6 @@ import EchartsGaugeMultiple from '@/components/EchartsGaugeMultiple.vue';
 
 // ChartJS
 import ChartJSLineAreaRT from '@/components/ChartJSLineAreaRT.vue';
-import ChartJsDoughnut from '@/components/ChartJsDoughnut.vue';
 
 /***** 🛠️ CONSTANTES y VARIABLES *****/
 
@@ -250,12 +228,22 @@ const series = ref([{ name: 'Usuarios', data: data.value }]);
 
 /***** 🧠 LÓGICA REALTIME *****/
 function addDataRealTime() {
-
   const newX = lastDate + UPDATE_INTERVAL;
-  const newY = Math.floor(Math.random() * 90) + 10;
+
+  // Generar valores que tienden a ser más altos (sesgados hacia >80)
+  let newY;
+  const random = Math.random();
+
+  if (random < 0.6) {
+    // 60% de las veces, entre 80 y 100
+    newY = Math.floor(Math.random() * 20) + 80;
+  } else {
+    // 40% de las veces, entre 10 y 79
+    newY = Math.floor(Math.random() * 70) + 10;
+  }
+
   data.value.push({ x: newX, y: newY });
 
-  // ApexLineRT - Cuidar uso de memoria
   if (data.value.length > MAX_DATA_POINTS) {
     data.value = data.value.slice(-2);
     series.value = [{ name: 'Usuarios', data: data.value }];
