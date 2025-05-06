@@ -61,7 +61,7 @@
           </ion-col>
           <ion-col size="12" size-lg="4.5">
             <div class="box">
-              <ChartJSLineAreaRT chartType="area" title="Memoria RAM" :kpi-target="50" color="#3b82f6" :min=50 :max=70 />
+              <ChartJSLineAreaRT chartType="area" title="Memoria RAM" :kpi-target="50" :kpi-targetMax="70" color="#3b82f6" :min=50 :max=70 />
             </div>
           </ion-col>
           <ion-col size="12" size-lg="3">

@@ -3,7 +3,7 @@
         <div class="kpi-box" v-if="currentKPI !== null">  
             <span class="kpi-label">Actual: </span>
             <span class="kpi-value">{{ currentKPI }}%</span>
-            <span class="kpi-target" v-if="props.kpiTarget">/ Objetivo: {{ props.kpiTarget }}%</span>
+            <span class="kpi-target" v-if="props.kpiTarget">/ Objetivo: {{ props.kpiTarget }} - {{ props.kpiTargetMax }}%</span>
         </div>
         <canvas ref="canvasRef"></canvas>
     </div>
@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<{
     min?: number;
     max?: number;
     kpiTarget?: number;
+    kpiTargetMax?: number;
 }>(), {
     chartType: 'line',
     title: 'Carga del servidor',
