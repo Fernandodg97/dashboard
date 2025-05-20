@@ -58,3 +58,84 @@ const datos = [
 ## Requisitos
 - Node.js
 - npm o yarn 
+
+# 🚀 Deploy de Ionic + Vue a GitHub Pages
+
+Este proyecto muestra cómo compilar y desplegar una aplicación construida con **Ionic + Vue** en **GitHub Pages**, usando la rama `gh-pages`.
+
+---
+
+## 📦 Requisitos
+
+- Node.js y npm instalados
+- Git configurado
+- Acceso de escritura al repositorio en GitHub
+
+---
+
+# Subir a GitHub
+
+## 🧠 Aumentar memoria para el build
+
+Algunas aplicaciones grandes pueden necesitar más memoria para compilar. Usamos la variable `NODE_OPTIONS` para aumentar el límite:
+
+```bash
+NODE_OPTIONS="--max_old_space_size=8192" ionic build
+```
+
+## 🛠 Configurar vite.config.ts
+
+```bash
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import legacy from '@vitejs/plugin-legacy'
+import path from 'path'
+
+export default defineConfig({
+  base: '/dashboard/',
+  plugins: [vue(), legacy()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+})
+```
+⚠️ Cambia /dashboard/ por el nombre del subdirectorio que usas en GitHub Pages si es diferente.
+
+## 🚀 Hacer el deploy
+1. Instalar gh-pages
+
+```bash
+npm install --save-dev gh-pages
+```
+
+2. Agregar el script en package.json
+```bash
+NODE_OPTIONS="--max_old_space_size=8192" npm run build
+```
+
+4. Subir el contenido de /dist a la rama gh-pages
+```bash
+npm run deploy
+```
+# 🌐 Configurar GitHub Pages
+1. Ve a Settings > Pages en tu repositorio.
+
+2. En Branch, selecciona:
+
+- gh-pages
+
+- /(root) como carpeta
+
+3. Guarda los cambios.
+
+# ✅ Ver tu sitio en línea
+Después de unos segundos/minutos, estará disponible en:
+```bash
+https://<tu-usuario>.github.io/<repositorio>/
+```
+# 🧼 Notas
+No es necesario subir la carpeta dist al repositorio.
+gh-pages maneja automáticamente el push a la rama gh-pages.
+Puedes repetir los pasos 3 y 4 cada vez que quieras actualizar el sitio.
