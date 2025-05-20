@@ -109,7 +109,6 @@ npm install --save-dev gh-pages
 2. Agregar el script en package.json
 ```bash
 "scripts": {
-  "build": "ionic build",
   "deploy": "gh-pages -d dist"
 }
 ```
@@ -122,6 +121,16 @@ NODE_OPTIONS="--max_old_space_size=8192" ionic build
 ```bash
 npm run deploy
 ```
+
+## 🚀 Hacer el deploy
+Configurar index.html
+
+asegurate que tienes 
+```bash
+<base href="/dashboard/" />
+```
+⚠️ Cambia /dashboard/ por el nombre del subdirectorio que usas en GitHub Pages si es diferente.
+
 # 🌐 Configurar GitHub Pages
 1. Ve a Settings > Pages en tu repositorio.
 
