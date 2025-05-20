@@ -59,21 +59,17 @@ const datos = [
 - Node.js
 - npm o yarn 
 
+---
+
 # 🚀 Deploy de Ionic + Vue a GitHub Pages
 
 Este proyecto muestra cómo compilar y desplegar una aplicación construida con **Ionic + Vue** en **GitHub Pages**, usando la rama `gh-pages`.
-
----
 
 ## 📦 Requisitos
 
 - Node.js y npm instalados
 - Git configurado
 - Acceso de escritura al repositorio en GitHub
-
----
-
-# Subir a GitHub
 
 ## 🧠 Aumentar memoria para el build
 
