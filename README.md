@@ -34,7 +34,7 @@ npm install
 ```
 3. Iniciar el servidor de desarrollo:
 ```bash
-npm run dev
+ionic serve
 ```
 
 ## Uso del Componente EchartsMap
@@ -108,7 +108,14 @@ npm install --save-dev gh-pages
 
 2. Agregar el script en package.json
 ```bash
-NODE_OPTIONS="--max_old_space_size=8192" npm run build
+"scripts": {
+  "build": "ionic build",
+  "deploy": "gh-pages -d dist"
+}
+```
+3. Compilar la app
+```bash
+NODE_OPTIONS="--max_old_space_size=8192" ionic build
 ```
 
 4. Subir el contenido de /dist a la rama gh-pages
