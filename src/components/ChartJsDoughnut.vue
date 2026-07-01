@@ -65,9 +65,9 @@ function initChart() {
         tooltip: {
           callbacks: {
             label: ctx => {
-              const total = ctx.dataset.data.reduce((sum, val) => sum + val, 0);
+              const total = (ctx.dataset.data as number[]).reduce((sum, val) => sum + (val || 0), 0);
               const value = ctx.parsed;
-              const percentage = ((value / total) * 100).toFixed(1);
+              const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
               return `${ctx.label}: ${value} (${percentage}%)`;
             }
           }
@@ -79,8 +79,9 @@ function initChart() {
           },
           formatter: (value, context) => {
             // Sum, val y total los detecta como posibles null
-            const total = context.chart.data.datasets[0].data.reduce((sum, val) => sum + val, 0);
-            const percentage = ((value / total) * 100).toFixed(1);
+            const dataList = context.chart.data.datasets[0].data as number[];
+            const total = dataList.reduce((sum, val) => sum + (val || 0), 0);
+            const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
             return `${percentage}%`;
           }
         }
