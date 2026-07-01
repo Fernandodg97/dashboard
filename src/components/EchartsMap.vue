@@ -21,10 +21,6 @@ import {
   ToolboxComponent
 } from 'echarts/components'
 
-// GeoMap
-//import europeMap from '@/assets/europe.geo.json'
-import globalMap from '@/assets/global.geo.json'
-
 // Registrar módulos necesarios de ECharts
 echarts.use([
   MapChart,
@@ -36,8 +32,10 @@ echarts.use([
 ])
 
 // Registrar el mapa de Europa en ECharts con ajuste para Islandia
-onMounted(() => {
-  echarts.registerMap('global', globalMap as any, {
+onMounted(async () => {
+  // const europeMap = await fetch('/maps/europe.geo.json').then(res => res.json())
+  const globalMap = await fetch('/maps/global.geo.json').then(res => res.json())
+  echarts.registerMap('global', globalMap, {
     Iceland: {
       left: -20,
       top: 65,
