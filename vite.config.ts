@@ -17,6 +17,20 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  // AGREGAMOS ESTA SECCIÓN DE BUILD PARA REDUCIR EL USO DE MEMORIA RAM
+  build: {
+    chunkSizeWarningLimit: 2000,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            // Separa cada librería (Ionic, Chart.js, ECharts, etc.) en un archivo independiente
+            return id.toString().split('node_modules/')[1].split('/')[0].toString();
+          }
+        }
+      }
+    }
+  },
   test: {
     globals: true,
     environment: 'jsdom'
