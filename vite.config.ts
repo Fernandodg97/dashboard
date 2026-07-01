@@ -8,7 +8,7 @@ import { defineConfig } from 'vite'
 const isNetlify = process.env.NETLIFY === 'true';
 
 export default defineConfig({
-  base: '/dashboard/',
+  base: '/',
   plugins: [
     vue(),
     !isNetlify ? legacy() : null
