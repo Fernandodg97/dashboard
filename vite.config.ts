@@ -5,27 +5,26 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { defineConfig } from 'vite'
 
-// Detectamos si estamos compilando en el servidor de Netlify
 const isNetlify = process.env.NETLIFY === 'true';
 
 export default defineConfig({
   base: '/dashboard/',
   plugins: [
     vue(),
-    // SI ESTÁ EN NETLIFY, DESACTIVAMOS EL PLUGIN LEGACY PARA QUE NO EXPLOTE LA RAM
     !isNetlify ? legacy() : null
-  ].filter(Boolean), // Filtra el 'null' para que Vite no falle
+  ].filter(Boolean),
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
   build: {
-    chunkSizeWarningLimit: 3000,
-    sourcemap: false, // Desactivado para ahorrar otro 30% de RAM
+    chunkSizeWarningLimit: 5000,
+    sourcemap: false,
+    // SI ESTÁ EN NETLIFY, APAGAMOS EL MINIFICADOR PESADO PARA EVITAR EL OUT OF MEMORY
+    minify: isNetlify ? false : 'esbuild',
     rollupOptions: {
       output: {
-        // Agrupamos las tres librerías pesadas para aliviar la carga
         manualChunks(id) {
           if (id.includes('node_modules/echarts') || id.includes('node_modules/zrender')) {
             return 'vendor-echarts';
